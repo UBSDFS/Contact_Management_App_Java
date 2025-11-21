@@ -19,6 +19,7 @@ public class Address {
         this.city = city;
         this.state = state;
         this.zipcode = zipcode;
+
     }
 
     // Getters

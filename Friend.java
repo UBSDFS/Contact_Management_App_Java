@@ -1,29 +1,34 @@
 /*
  * Ulysses Burden III
- * November 13, 2025
- * Assignment: Week 1 - Project- Show Composition
+ * November 20, 2025
+ * Assignment: Week 2 - Project- Show Composition
  *Description: This class represents a Friend contact, which is a specific type of Contact.
+ *with a nickname attribute.
  */
 //Inheritance relationship. Friend "is a" Contact
 public class Friend extends Contact {
 
     //Additional attribute specific to Friend
-    private String contactType;
+    private String nickName;
 
     // Constructor
-    public Friend(String firstName, String lastName, String phoneNumber, String email, Address address, String contactType) {
+    public Friend(String firstName, String lastName, String phoneNumber, String email, Address address, String nickName) {
         super(firstName, lastName, phoneNumber, email, address);
-        this.contactType = contactType;
+        this.nickName = nickName;
     }
 
+    public String getNickName() {
+        return nickName;
+    }
+
+    @Override()
     public String getContactType() {
-        return contactType;
+        return "Friend";
     }
 
-    //Override toString to include contactType
     @Override
     public String toString() {
-        return super.toString() + "\nContact Type: " + contactType;
-    }
+        return super.toString() + "\nNickname: " + nickName;
 
+    }
 }
