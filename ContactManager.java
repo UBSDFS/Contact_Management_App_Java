@@ -1,7 +1,7 @@
 /*
  * Ulysses Burden III
- * November 20, 2025
- * Assignment: Week 2 - Project
+ * November 25, 2025
+ * Assignment: Week 3 - Project
  * Description: This class manages a collection of Contact objects. Handles logic for adding, removing, and displaying contacts.
  * Demonstrates use of inheritance, composition, and polymorphism and interfaces.
  */
@@ -12,8 +12,8 @@ import java.util.Scanner;
 
 public class ContactManager {
 
-    private List<Contact> contacts; // List to store Contact objects
-    private Scanner scanner; // Scanner for user input in the manager and menu loop
+    private final List<Contact> contacts; // List to store Contact objects
+    private final Scanner scanner; // Scanner for user input in the manager and menu loop
 
     // Constructor for ContactManager to initialize the contacts list and scanner
     public ContactManager() {
@@ -54,11 +54,11 @@ public class ContactManager {
     // Method to find a contact by full name (case insensitive)
     public Contact findContactByName() {
         String name = readString("Enter the full name of the contact to find:");
-        String lower = name.toLowerCase();
+        String lower = name.trim().toLowerCase();
 
         for (Contact c : contacts) {
-            String fullName = c.getFirstName() + " " + c.getLastName();
-            if (fullName.toLowerCase().equals(lower)) {
+            String fullName = (c.getFirstName() + " " + c.getLastName()).trim().toLowerCase();
+            if (fullName.equals(lower) || fullName.contains(lower)) {
                 return c;
             }
         }
@@ -76,7 +76,7 @@ public class ContactManager {
     }
 
     private void showMenu() {
-        System.out.println("\n---Project Week 2 Rolodex Application---");
+        System.out.println("\n---Project Week 3 Rolodex Application---");
         System.out.println("Developed by: Ulysses Burden III");
         System.out.println("\nUse the menu below to manage your contacts:");
         System.out.println("-----------------------------------");
@@ -175,12 +175,95 @@ public class ContactManager {
 
     }
 
+    // Implementation for updating a contact
     private void updateContact() {
-        // Implementation for updating a contact. Will add feature later.
+        System.out.println("\nUpdate contact....");
+        Contact target = findContactByName();
+        if (target == null) {
+            System.out.println("Contact not found.");
+            return;
+        }
+        System.out.println("Contact found:");
+        System.out.println(target.toString()); // Display current details
+        System.out.println("\nWhat would you like to update?");
+        System.out.println("1. First Name");
+        System.out.println("2. Last Name");
+        System.out.println("3. Phone Number");
+        System.out.println("4. Email");
+        System.out.println("5. Address");
+        System.out.println("6. Type-specific (Nickname/Relationship/Company Info)");
+        int updateChoice = readInt("Enter choice:");
+        switch (updateChoice) {
+            case 1:
+                String newFirstName = readString("Enter new first name:");
+                target.setFirstName(newFirstName);
+                break;
+            case 2:
+                String newLastName = readString("Enter new last name:");
+                target.setLastName(newLastName);
+                break;
+            case 3:
+                String newPhoneNumber = readString("Enter new phone number:");
+                target.setPhoneNumber(newPhoneNumber);
+                break;
+            case 4:
+                String newEmail = readString("Enter new email:");
+                target.setEmail(newEmail);
+                break;
+            case 5:
+                Address newAddress = readAddress();
+                target.setAddress(newAddress);
+                break;
+            case 6:
+                updateTypeSpecificFields(target);
+                break;
+            default:
+                System.out.println("Invalid choice. Returning to main menu.");
+                return;
+        }
+        System.out.println("Contact updated successfully!");
+        System.out.println(target.toString());
+    }
+
+    // Helper method to update fields that are specific to subclasses.
+    private void updateTypeSpecificFields(Contact target) {
+        if (target instanceof Friend) {
+            Friend friend = (Friend) target;
+            String newNickName = readString("Enter new nickname:");
+            friend.setNickName(newNickName);
+            System.out.println("Friend nickname updated successfully.");
+        } else if (target instanceof Family) {
+            Family family = (Family) target;
+            String newRelationship = readString("Enter new relationship:");
+            family.setRelationship(newRelationship);
+            System.out.println("Family relationship updated successfully.");
+        } else if (target instanceof Business) {
+            Business business = (Business) target;
+            String newCompanyName = readString("Enter new company name:");
+            String newJobTitle = readString("Enter new job title:");
+            business.setCompanyName(newCompanyName);
+            business.setJobTitle(newJobTitle);
+            System.out.println("Business details updated successfully.");
+        }
     }
 
     private void deleteContact() {
-        // Implementation for deleting a contact. Will add feature later.
+        System.out.println("\nDeleting a contact...");
+
+        Contact target = findContactByName();
+        if (target == null) {
+            System.out.println("Contact not found.");
+            return;
+        }
+        System.out.println("Contact found:");
+        System.out.println(target.toString());
+        String confirmation = readString("Are you sure you want to delete this contact? (yes/no):");
+        if (confirmation.equalsIgnoreCase("yes")) {
+            contacts.remove(target);
+            System.out.println("Contact deleted successfully.");
+        } else {
+            System.out.println("Deletion cancelled.");
+        }
     }
 
     // Implementation for displaying all contacts.

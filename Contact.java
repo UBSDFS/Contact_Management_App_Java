@@ -1,14 +1,16 @@
 /*
  * Ulysses Burden III
- * November 13, 2025
- * Assignment: Week 2 Project
+ * November 28, 2025
+ * Assignment: Week 3 Project
  *Description: This class represents a generic Contact with basic contact information. This is the Superclass for specific contact types
  * and demonstrates the creation of an interface and inheritance.
  */
 //Contact class demonstrating the creation of an interface and inheritance
 public abstract class Contact implements ContactType {
 
-    // Basic contact attributes
+    //Unique identifier for DB purposes
+    private int contactId;
+    // Basic contact attributes with private access modifiers
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -17,8 +19,18 @@ public abstract class Contact implements ContactType {
     // Composition relationship from Address class. Contact "has a" Address
     private Address address;
 
+    //No-argument constructor to be used by subclasses such as Business, Family, and Friend
+    protected Contact() {
+    }
+
+    //
+    protected Contact(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     // Constructor. works in conjunction with ArrayList in ContactManager to store multiple contacts
-    public Contact(String firstName, String lastName, String phoneNumber, String email, Address address) {
+    protected Contact(String firstName, String lastName, String phoneNumber, String email, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -26,7 +38,14 @@ public abstract class Contact implements ContactType {
         this.address = address;
     }
 
-    // Getters
+    // Abstract method to be implemented by subclasses for printing a summary of the contact
+    public abstract void printSummary();
+
+    // Getters and Setters for encapsulation
+    public int getContactId() {
+        return contactId;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -45,6 +64,10 @@ public abstract class Contact implements ContactType {
 
     public Address getAddress() {
         return address;
+    }
+
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
     }
 
     public void setAddress(Address address) {
@@ -67,14 +90,13 @@ public abstract class Contact implements ContactType {
         this.email = email;
     }
 
-    // Method to print a summary of the contact (for displaying in lists)
-    public void printSummary() {
-        System.out.println(getContactType() + ": " + firstName + " " + lastName + " | Phone: " + phoneNumber + " | Email: " + email);
-    }
-
-    // Override toString method for detailed contact information
+    // Override toString method to display contact information
     @Override
     public String toString() {
-        return firstName + " " + lastName + "\nPhone: " + phoneNumber + "\nEmail: " + email + "\nAddress: " + address.toString();
+        return "Contact ID: " + contactId
+                + ", Name: " + firstName + " " + lastName
+                + ", Phone: " + phoneNumber
+                + ", Email: " + email
+                + ", Address: " + address;
     }
 }
