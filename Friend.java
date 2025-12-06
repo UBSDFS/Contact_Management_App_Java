@@ -33,7 +33,7 @@ public class Friend extends Contact {
     }
 
     //Override toString to include nickName
-    @Override()
+    @Override
     public String getContactType() {
         return "Friend";
     }

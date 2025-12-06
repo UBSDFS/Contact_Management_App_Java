@@ -6,7 +6,7 @@
  * and demonstrates the creation of an interface and inheritance.
  */
 //Contact class demonstrating the creation of an interface and inheritance
-public abstract class Contact implements ContactType {
+public abstract class Contact {
 
     //Unique identifier for DB purposes
     private int contactId;
@@ -40,6 +40,9 @@ public abstract class Contact implements ContactType {
 
     // Abstract method to be implemented by subclasses for printing a summary of the contact
     public abstract void printSummary();
+
+    // Abstract method to get contact type
+    public abstract String getContactType();
 
     // Getters and Setters for encapsulation
     public int getContactId() {

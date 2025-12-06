@@ -1,7 +1,7 @@
 /*
  * Ulysses Burden III
- * November 25, 2025
- * Assignment: Week 3 - Project- Show Composition
+ * Date: December 4, 2025
+ * Assignment: SDC330L Week 4 - Project- Show Composition
  * Description: This class represents a Business contact, which is a specific type of Contact.
  * with companyName and jobTitle attributes.
  */

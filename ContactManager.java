@@ -1,9 +1,10 @@
 /*
  * Ulysses Burden III
- * November 25, 2025
- * Assignment: Week 3 - Project
+ * Date: December 4, 2025
+ * Assignment: SDC330L Week 4 - Project
  * Description: This class manages a collection of Contact objects. Handles logic for adding, removing, and displaying contacts.
  * Demonstrates use of inheritance, composition, and polymorphism and interfaces.
+ * Interacts with ContactStorage for database persistence.
  */
 
 import java.util.ArrayList;
@@ -12,13 +13,15 @@ import java.util.Scanner;
 
 public class ContactManager {
 
-    private final List<Contact> contacts; // List to store Contact objects
+    private final List<Contact> contacts; // List to store Contact objects locally
     private final Scanner scanner; // Scanner for user input in the manager and menu loop
+    private final ContactStorage storage; // Handles database operations
 
     // Constructor for ContactManager to initialize the contacts list and scanner
-    public ContactManager() {
-        this.contacts = new ArrayList<>();
+    public ContactManager(ContactStorage storage) {
+        this.contacts = new ArrayList<>(); // Initialize the contacts list locally
         this.scanner = new Scanner(System.in);
+        this.storage = storage; // Initialize storage for database operations
     }
 
     // Helper methods used for reading text input from user
@@ -76,14 +79,14 @@ public class ContactManager {
     }
 
     private void showMenu() {
-        System.out.println("\n---Project Week 3 Rolodex Application---");
+        System.out.println("\n---Project Week 4 Rolodex Application---");
         System.out.println("Developed by: Ulysses Burden III");
         System.out.println("\nUse the menu below to manage your contacts:");
         System.out.println("-----------------------------------");
         System.out.println("1. Add Contact");
         System.out.println("2. Find Contact");
-        System.out.println("3. Update Contact"); // Will add feature later.
-        System.out.println("4. Delete Contact"); // Will add feature later.
+        System.out.println("3. Update Contact");
+        System.out.println("4. Delete Contact");
         System.out.println("5. Display All Contacts");
         System.out.println("6. Display Contacts by Type");
         System.out.println("0. Exit");
@@ -156,9 +159,10 @@ public class ContactManager {
                 System.out.println("Invalid contact type. Returning to main menu.");
                 return;
         }
-        // Add the new contact to the list
+        // Add the new contact to the list and storage
         contacts.add(newContact);
-        System.out.println("Contact added successfully!");
+        storage.addContact(newContact);
+        System.out.println("New contact ID: " + newContact.getContactId());
         newContact.printSummary();
     }
 
@@ -221,8 +225,16 @@ public class ContactManager {
                 System.out.println("Invalid choice. Returning to main menu.");
                 return;
         }
+        // Update the contact in local storage
         System.out.println("Contact updated successfully!");
         System.out.println(target.toString());
+        // Update the contact in the database
+        boolean yes = storage.updateContact(target);
+        if (yes) {
+            System.out.println("Contact updated in database successfully.");
+        } else {
+            System.out.println("Failed to update contact in database.");
+        }
     }
 
     // Helper method to update fields that are specific to subclasses.
@@ -263,6 +275,13 @@ public class ContactManager {
             System.out.println("Contact deleted successfully.");
         } else {
             System.out.println("Deletion cancelled.");
+        }
+        // Delete the contact from the database
+        boolean yes = storage.deleteContact(target.getContactId());
+        if (yes) {
+            System.out.println("Contact deleted from database successfully.");
+        } else {
+            System.out.println("Failed to delete contact from database.");
         }
     }
 

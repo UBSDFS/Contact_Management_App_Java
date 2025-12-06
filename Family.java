@@ -47,7 +47,7 @@ public class Family extends Contact {
                 + "| Relationship: " + relationship);
     }
 
-    //Override toString to include nickName
+    //Override toString to include relationship
     @Override
     public String toString() {
         return super.toString() + "\nRelationship: " + relationship;

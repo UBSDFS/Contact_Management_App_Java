@@ -1,16 +1,22 @@
 /*
  * Ulysses Burden III
- * November 13, 2025
- * Assignment: Week 2
+ * Date: December 4, 2025
+ * Assignment: SDC330L Week 4 - Project
  *Description: This is the main application class for the Rolodex contact management system.
  */
+import java.sql.Connection;
 import java.util.Scanner;
 
 public class RolodexApp {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ContactManager manager = new ContactManager();
+        Connection conn = SQLiteDatabase.connect("contacts.db");
+        if (conn != null) {
+            System.out.println("Connected successfully.");
+        }
+        ContactStorage storage = new ContactStorage(conn);
+        ContactManager manager = new ContactManager(storage);
         manager.run();
         scanner.close();
     }
