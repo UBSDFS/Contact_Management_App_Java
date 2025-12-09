@@ -1,7 +1,6 @@
 /*
  * Ulysses Burden III
  * Date: December 4, 2025
- * Assignment: SDC330L Week 4 - Project- Show Composition
  * Description: This class represents a physical address with street, city, state, and zipcode. This class is used in composition with the Contact class.
  */
 

@@ -1,8 +1,7 @@
 /*
  * Ulysses Burden III
  * Date: December 4, 2025
- * Assignment: SDC330L Week 4 - Project
- *Description: This is the main application class for the Rolodex contact management system.
+ * Description: This is the main application class for the Rolodex contact management system.
  */
 import java.sql.Connection;
 import java.util.Scanner;

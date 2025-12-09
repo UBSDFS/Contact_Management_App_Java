@@ -1,10 +1,10 @@
 /*
  * Ulysses Burden III
  * November 25, 2025
- * Assignment: Week 3 - Project- Show Composition
- *Description: This class represents a Friend contact, which is a specific type of Contact.
- *with a nickname attribute.
+ * Description: This class represents a Friend contact, which is a specific type of Contact.
+ * with a nickname attribute.
  */
+
 //Inheritance relationship. Friend "is a" Contact
 public class Friend extends Contact {
 

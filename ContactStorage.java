@@ -1,8 +1,7 @@
 /*
 *Name: Ulysses Burden III
 *Date: December 4, 2025
-*Assignment: SDC330L Week 4 GP – Database Interactions
-*Description: This class handles storage operations for Contact objects in a SQLite database.
+* Description: This class handles storage operations for Contact objects in a SQLite database.
 *
  */
 

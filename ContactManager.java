@@ -1,7 +1,6 @@
 /*
  * Ulysses Burden III
  * Date: December 4, 2025
- * Assignment: SDC330L Week 4 - Project
  * Description: This class manages a collection of Contact objects. Handles logic for adding, removing, and displaying contacts.
  * Demonstrates use of inheritance, composition, and polymorphism and interfaces.
  * Interacts with ContactStorage for database persistence.

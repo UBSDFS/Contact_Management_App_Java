@@ -1,7 +1,6 @@
 /*
  * Ulysses Burden III
  * November 28, 2025
- * Assignment: Week 3 Project
  *Description: This class represents a generic Contact with basic contact information. This is the Superclass for specific contact types
  * and demonstrates the creation of an interface and inheritance.
  */

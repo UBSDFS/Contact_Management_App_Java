@@ -1,7 +1,6 @@
 /*
  * Ulysses Burden III
  * November 25, 2025
- * Assignment: Week 3 - Project- Show Composition
  * Description: This class represents a Family contact, which is a specific type of Contact.
  * with a relationship attribute.
  */
