@@ -67,6 +67,16 @@ public class ContactManager {
         return null;
     }
 
+    private void reloadContactsFromDatabase() {
+        this.contacts.clear();
+        this.contacts.addAll(this.storage.getAllContacts());
+    }
+
+    private void loadContactsFromDatabase() {
+        contacts.clear();
+        contacts.addAll(storage.getAllContacts());
+    }
+
     // Main loop to run the contact manager
     public void run() {
         int choice;
@@ -78,7 +88,7 @@ public class ContactManager {
     }
 
     private void showMenu() {
-        System.out.println("\n---Project Week 4 Rolodex Application---");
+        System.out.println("\n---Rolodex Application---");
         System.out.println("Developed by: Ulysses Burden III");
         System.out.println("\nUse the menu below to manage your contacts:");
         System.out.println("-----------------------------------");
@@ -260,25 +270,28 @@ public class ContactManager {
 
     private void deleteContact() {
         System.out.println("\nDeleting a contact...");
+        Contact contactToDelete = this.findContactByName();
 
-        Contact target = findContactByName();
-        if (target == null) {
+        if (contactToDelete == null) {
             System.out.println("Contact not found.");
             return;
         }
+
         System.out.println("Contact found:");
-        System.out.println(target.toString());
-        String confirmation = readString("Are you sure you want to delete this contact? (yes/no):");
-        if (confirmation.equalsIgnoreCase("yes")) {
-            contacts.remove(target);
-            System.out.println("Contact deleted successfully.");
-        } else {
+        System.out.println(contactToDelete.toString());
+
+        String confirm = this.readString("Are you sure you want to delete this contact? (yes/no): ");
+        if (!confirm.equalsIgnoreCase("yes")) {
             System.out.println("Deletion cancelled.");
+            return;
         }
-        // Delete the contact from the database
-        boolean yes = storage.deleteContact(target.getContactId());
-        if (yes) {
-            System.out.println("Contact deleted from database successfully.");
+
+        // 1) Delete from database first
+        boolean deletedFromDb = this.storage.deleteContact(contactToDelete.getContactId());
+        if (deletedFromDb) {
+            // 2) Remove from local list by ID (not by object reference)
+            this.contacts.removeIf(c -> c.getContactId() == contactToDelete.getContactId());
+            System.out.println("Contact deleted successfully (database + local list).");
         } else {
             System.out.println("Failed to delete contact from database.");
         }
@@ -286,12 +299,14 @@ public class ContactManager {
 
     // Implementation for displaying all contacts.
     private void displayAllContacts() {
-        System.out.println("\nDisplaying all contacts...");
+        // Always sync from DB before showing
+        reloadContactsFromDatabase();
 
-        if (contacts.isEmpty()) {
+        System.out.println("\nDisplaying all contacts...");
+        if (this.contacts.isEmpty()) {
             System.out.println("No contacts available.");
         } else {
-            for (Contact c : contacts) {
+            for (Contact c : this.contacts) {
                 c.printSummary();
             }
         }
